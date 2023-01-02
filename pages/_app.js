@@ -18,8 +18,8 @@ function MyApp({ Component, pageProps }) {
         },
       })
   );
+  // Workaround: manually deserializing props to later pass the result (deserializedProps) to Hydrate instead of props
   const { _superjson, ...props } = pageProps;
-
   const deserializedProps = superjson.deserialize({ json: props, meta: _superjson });
 
   return (
