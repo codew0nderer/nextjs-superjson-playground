@@ -1,7 +1,7 @@
 import '../styles/globals.css';
 import { useState } from 'react';
 import { Hydrate, QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import superjson from 'superjson';
+import { deserializeProps } from "babel-plugin-superjson-next/tools";
 
 function MyApp({ Component, pageProps }) {
   const [queryClient] = useState(
@@ -18,16 +18,12 @@ function MyApp({ Component, pageProps }) {
         },
       })
   );
-  // Workaround: manually deserializing props to later pass the result (deserializedProps) to Hydrate instead of props
-  const { _superjson, ...props } = pageProps;
-  const deserializedProps = superjson.deserialize({ json: props, meta: _superjson });
+  const { dehydratedState, ...deserializedProps } = deserializeProps(pageProps);
 
   return (
     <QueryClientProvider client={queryClient}>
-      {/* The workaround I used to fix the issue is the following */}
-      {/* <Hydrate state={deserializedProps.dehydratedState}> */}
-      <Hydrate state={props.dehydratedState}>
-        <Component {...pageProps} />
+      <Hydrate state={dehydratedState}>
+        <Component {...deserializedProps} />
       </Hydrate>
     </QueryClientProvider>
   );
