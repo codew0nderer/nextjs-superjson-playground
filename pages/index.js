@@ -22,11 +22,5 @@ export default function Home(props) {
   // Expected behavior is for data.dateValue to be instanceof Date
   console.log('useQuery - dateValue instanceof Date: ', data.dateValue instanceof Date);
 
-  const postDataFromProps = props.dehydratedState.queries[0].state.data;
-
-  console.log('postDataFromProps.dateValue: ', postDataFromProps.dateValue);
-  console.log('postDataFromProps.dateValue typeof: ', typeof postDataFromProps.dateValue);
-  console.log('postDataFromProps.dateValue instanceof Date: ', postDataFromProps.dateValue instanceof Date);
-
   return <>Check console logs!</>;
 }
